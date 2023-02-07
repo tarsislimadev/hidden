@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  github-release:
+    image: 'github-release'
+    build: './src'
+
+  www:
+    image: 'tmvdl/projects:hidden'
+    build: './src/www'
+    volumes:
+      - './src/www/html:/usr/share/nginx/html'
+    ports:
+      - '8080:80'
