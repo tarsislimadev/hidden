@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Likes</title>
+
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <script src="./js/nElement.js"></script>
+  <script src="./js/api.js"></script>
+  <script>
+    const app = nElement.fromId('app')
+
+    const head = new nFlex()
+    head.setStyle('padding', '1rem')
+    app.append(head)
+
+    const title = new nH1()
+    title.setStyle('text-align', 'center')
+    title.setText('Hidden')
+    head.append(title)
+
+    const button = new nLink()
+    button.href('create.html')
+    button.setStyle('line-height', '3rem')
+    button.setStyle('font-size', '3rem')
+    button.setStyle('height', '3rem')
+    button.setStyle('width', '3rem')
+    button.setText('+')
+    head.append(button)
+
+    const errorMessage = new nError()
+    app.append(errorMessage)
+
+    const list = new nElement()
+    list.setStyle('padding', '1rem')
+    app.append(list)
+
+    const parseColor = (color) => {
+      switch (color) {
+        case 'red': return 'black';
+        case 'black': return 'white';
+      }
+
+      return 'black'
+    }
+
+    const renderPost = ({ id, color, text, likes }) => {
+      const height =  ((window.innerWidth - 16) / 2) + 'px'
+
+      const post = new nElement()
+      post.setStyle('background-color', 'blue')
+      post.setStyle('margin-bottom', '1rem')
+      post.setStyle('text-align', 'center')
+      post.setStyle('line-height', height)
+      post.setStyle('padding', '1rem')
+      post.setStyle('height', height)
+
+      const postText = new nElement()
+      postText.setText(text)
+      post.append(postText)
+
+      list.append(post)
+    }
+
+    API.listPosts()
+      .then((res) => res.get('list', []).map((post, id) => renderPost({ id, ...post })))
+      .catch((err) => errorMessage.setText(err.message))
+
+  </script>
+</body>
+
+</html>

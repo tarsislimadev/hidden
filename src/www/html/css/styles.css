@@ -1,0 +1,13 @@
+html,
+body {
+  background-color: black;
+  color: white;
+
+  font-family: 'Courier New', Courier, monospace;
+  /* font-size: 8rem; */
+
+  border: none;
+  margin: 0rem;
+  outline: none;
+  padding: 0rem;
+}
