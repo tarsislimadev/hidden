@@ -13,3 +13,11 @@ services:
       - './src/www/html:/usr/share/nginx/html'
     ports:
       - '8080:80'
+
+  api:
+    image: 'tmvdl/projects:hidden-api'
+    build: './src/api'
+    volumes:
+      - './src/api:/app'
+    ports:
+      - '4040:80'
