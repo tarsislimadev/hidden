@@ -74,6 +74,8 @@
       .then((res) => res.get('list', []).map((post, id) => renderPost({ id, ...post })))
       .catch((err) => errorMessage.setText(err.message))
 
+    setInterval(() => API.sync(), 60 * 1000)
+
   </script>
 </body>
 

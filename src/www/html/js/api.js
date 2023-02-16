@@ -121,7 +121,7 @@ API.getPosts = ({ address, posts }) => Ajax.post(`http://${address}/sync`, { lis
 API.sync = () => {
   l.get(['hosts'], [])
     .then((res) =>
-      res.get('list')
+      res.get('list', [])
         .map((host) => host.address || '')
         .filter((address) => !!address)
         .map((address) =>
