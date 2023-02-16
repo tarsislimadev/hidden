@@ -1,1 +1,3 @@
-print('Hidden v0.1.0')
+import server
+
+server.listen()
