@@ -1,9 +1,15 @@
 FROM python:3.10
 
+ENV DATA_PATH=/data
+
+ENV PORT=80
+
 WORKDIR /app
 
-# RUN python ...
+COPY . .
 
-# CMD hidden --port=80 --path=/data
+RUN python __main__.py bdist
+
+RUN ls -la dist
 
 CMD python __main__.py
