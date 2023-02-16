@@ -33,7 +33,7 @@
     headButton.setStyle('font-size', '3rem')
     headButton.setStyle('height', '3rem')
     headButton.setStyle('width', '3rem')
-    headButton.setText('-')
+    headButton.setText('<-')
     head.append(headButton)
 
     const errorMessage = new nError()
@@ -43,29 +43,22 @@
     input.setStyle('background-color', 'black')
     input.setStyle('text-align', 'center')
     input.setStyle('font', 'inherit')
-    input.setStyle('height', '20rem')
+    input.setStyle('padding', '2rem')
     input.setStyle('color', 'white')
-    input.focus()
+    input.setValue('000.000.000.000:0000')
     app.append(input)
 
     const button = new nButton()
     button.setStyle('width', '100%')
-    button.setText('save')
+    button.setText('hosted')
     button.on('click', () => {
-      const text = input.getValue()
+      const host = input.getValue()
 
-      API.savePost({ text })
-        .then(() => goTo('index.html'))
+      API.saveHost({ host })
+        .then(() => goBack())
         .catch((err) => console.error(err))
     })
     app.append(button)
-
-    const link = new nLink()
-    link.setContainerStyle('text-align', 'center')
-    link.setContainerStyle('padding', '1rem')
-    link.setText('hosts')
-    link.href('hosts.html')
-    app.append(link)
 
   </script>
 </body>

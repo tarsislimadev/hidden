@@ -84,12 +84,52 @@ const Local = function (id = '') {
   }
 }
 
+const Ajax = {}
+
+Ajax.post = (url, data = {}) => {
+  return new Promise((res, rej) => {
+    const xhr = new XMLHttpRequest()
+    xhr.open('POST', url, true)
+
+    const onComplete = (xhr) => xhr.status === '200'
+      ? res(new SuccessResponse(xhr))
+      : rej(new ErrorResponse(xhr))
+
+    xhr.onerror = () => onComplete(xhr)
+    xhr.onload = () => onComplete(xhr)
+
+    xhr.send(JSON.stringify(data))
+  })
+}
+
+const goBack = () => { window.history.back() }
+
 const goTo = (location, value = null) => (window.location = location)
 
-const l = new Local('api')
-
 const API = {}
+
+const l = new Local('api')
 
 API.listPosts = () => l.get(['posts'], [])
 
 API.savePost = (post) => l.add(['posts'], post)
+
+API.saveHost = ({ host }) => l.add(['hosts'], { address: host })
+
+API.getPosts = ({ address, posts }) => Ajax.post(`http://${address}/sync`, { list: posts })
+
+API.sync = () => {
+  l.get(['hosts'], [])
+    .then((res) =>
+      res.get('list')
+        .map((host) => host.address || '')
+        .filter((address) => !!address)
+        .map((address) =>
+          API.getPosts({ address, posts: API.listPosts() })
+            .then((res) => {
+              const list = res.get('list')
+              console.log({ list })
+            })
+        )
+    )
+}
