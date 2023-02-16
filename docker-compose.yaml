@@ -7,14 +7,20 @@ services:
     build: './src'
 
   www:
+    hostname: 'www'
+    container_name: 'www'
     image: 'tmvdl/projects:hidden'
     build: './src/www'
     volumes:
       - './src/www/html:/usr/share/nginx/html'
     ports:
       - '8080:80'
+    depends_on:
+      - 'api'
 
   api:
+    hostname: 'api'
+    container_name: 'api'
     image: 'tmvdl/projects:hidden-api'
     build: './src/api'
     volumes:
