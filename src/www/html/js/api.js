@@ -116,7 +116,7 @@ API.savePost = (post) => l.add(['posts'], post)
 
 API.saveHost = ({ host }) => l.add(['hosts'], { address: host })
 
-API.getPosts = ({ address, posts }) => Ajax.post(`http://${address}/sync`, { list: posts })
+API.getPosts = ({ address, list }) => Ajax.post(`http://${address}/sync`, { list })
 
 API.sync = () => {
   l.get(['hosts'], [])
@@ -124,12 +124,12 @@ API.sync = () => {
       res.get('list', [])
         .map((host) => host.address || '')
         .filter((address) => !!address)
-        .map((address) =>
-          API.getPosts({ address, posts: API.listPosts() })
-            .then((res) => {
-              const list = res.get('list')
-              console.log({ list })
-            })
-        )
+        .map(async (address) => {
+          const posts = await API.listPosts()
+          const list = posts.get('list')
+
+          return API.getPosts({ address, list })
+            .then((res) => res.get('list'))
+        })
     )
 }

@@ -53,15 +53,13 @@
     }
 
     const renderPost = ({ id, color, text, likes }) => {
-      const height =  ((window.innerWidth - 16) / 2) + 'px'
+      const width =  ((window.innerWidth - 32) / 1) + 'px'
 
       const post = new nElement()
       post.setStyle('background-color', 'blue')
       post.setStyle('margin-bottom', '1rem')
       post.setStyle('text-align', 'center')
-      post.setStyle('line-height', height)
       post.setStyle('padding', '1rem')
-      post.setStyle('height', height)
 
       const postText = new nElement()
       postText.setText(text)
