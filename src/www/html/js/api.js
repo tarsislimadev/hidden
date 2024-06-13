@@ -1,5 +1,5 @@
 
-class Response {
+export class Response {
   constructor({ status, message, data } = {}) {
     this.status = status
     this.message = message
@@ -23,7 +23,7 @@ class Response {
   }
 }
 
-class SuccessResponse extends Response {
+export class SuccessResponse extends Response {
   constructor(data = {}) {
     super({
       status: 'ok',
@@ -33,7 +33,7 @@ class SuccessResponse extends Response {
   }
 }
 
-class ErrorResponse extends Response {
+export class ErrorResponse extends Response {
   constructor(err = new Error) {
     super({
       status: 'error',
@@ -102,11 +102,11 @@ Ajax.post = (url, data = {}) => {
   })
 }
 
-const goBack = () => { window.history.back() }
+export const goBack = () => { window.history.back() }
 
-const goTo = (location, value = null) => (window.location = location)
+export const goTo = (location, value = null) => (window.location = location)
 
-const API = {}
+export const API = {}
 
 const l = new Local('api')
 
