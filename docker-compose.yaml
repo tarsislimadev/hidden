@@ -12,16 +12,16 @@ services:
     volumes:
       - './src/www/html:/usr/share/nginx/html'
     ports:
-      - '80:80'
+      - '8000:80'
 
-  api:
-    image: 'tmvdl/projects:hidden-api'
-    build: './src/api'
+  app:
+    image: 'tmvdl/projects:hidden-app'
+    build: './src/app'
     environment:
       - 'DATA_PATH=/data'
       - 'PORT=80'
     volumes:
-      - './src/api:/app'
+      - './src/app:/app'
       - './data:/data'
     ports:
       - '8080:80'
